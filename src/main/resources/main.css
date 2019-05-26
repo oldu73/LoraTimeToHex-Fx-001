@@ -1,0 +1,9 @@
+.root {
+    -fx-background-color: WHITESMOKE;
+}
+.label {
+    -fx-font-size: 14;
+}
+.button {
+    -fx-text-fill: black;
+}
