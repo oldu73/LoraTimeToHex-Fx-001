@@ -14,30 +14,30 @@
 <GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="800.0" stylesheets="/main.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller">
    <Label text="HH" GridPane.columnIndex="5" GridPane.rowIndex="1" />
    <Label text="mm" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-   <Label fx:id="h1" text="00" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-   <Label fx:id="m1" text="00" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-   <Label fx:id="h2" text="00" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-   <Label fx:id="m2" text="00" GridPane.columnIndex="7" GridPane.rowIndex="4" />
-   <Label fx:id="h3" text="00" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-   <Label fx:id="m3" text="00" GridPane.columnIndex="7" GridPane.rowIndex="5" />
-   <Label fx:id="h4" text="00" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-   <Label fx:id="m4" text="00" GridPane.columnIndex="7" GridPane.rowIndex="6" />
-   <Label fx:id="h5" text="00" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-   <Label fx:id="m5" text="00" GridPane.columnIndex="7" GridPane.rowIndex="7" />
-   <Label fx:id="h6" text="00" GridPane.columnIndex="5" GridPane.rowIndex="8" />
-   <Label fx:id="m6" text="00" GridPane.columnIndex="7" GridPane.rowIndex="8" />
-   <Label fx:id="h7" text="00" GridPane.columnIndex="5" GridPane.rowIndex="9" />
-   <Label fx:id="m7" text="00" GridPane.columnIndex="7" GridPane.rowIndex="9" />
-   <Label fx:id="h8" text="00" GridPane.columnIndex="5" GridPane.rowIndex="10" />
-   <Label fx:id="m8" text="00" GridPane.columnIndex="7" GridPane.rowIndex="10" />
-   <Label fx:id="h9" text="00" GridPane.columnIndex="5" GridPane.rowIndex="11" />
-   <Label fx:id="m9" text="00" GridPane.columnIndex="7" GridPane.rowIndex="11" />
-   <Label fx:id="h10" text="00" GridPane.columnIndex="5" GridPane.rowIndex="12" />
-   <Label fx:id="m10" text="00" GridPane.columnIndex="7" GridPane.rowIndex="12" />
+   <Label fx:id="h1" text="-" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+   <Label fx:id="m1" text="-" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+   <Label fx:id="h2" text="-" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+   <Label fx:id="m2" text="-" GridPane.columnIndex="7" GridPane.rowIndex="4" />
+   <Label fx:id="h3" text="-" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+   <Label fx:id="m3" text="-" GridPane.columnIndex="7" GridPane.rowIndex="5" />
+   <Label fx:id="h4" text="-" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+   <Label fx:id="m4" text="-" GridPane.columnIndex="7" GridPane.rowIndex="6" />
+   <Label fx:id="h5" text="-" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+   <Label fx:id="m5" text="-" GridPane.columnIndex="7" GridPane.rowIndex="7" />
+   <Label fx:id="h6" text="-" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+   <Label fx:id="m6" text="-" GridPane.columnIndex="7" GridPane.rowIndex="8" />
+   <Label fx:id="h7" text="-" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+   <Label fx:id="m7" text="-" GridPane.columnIndex="7" GridPane.rowIndex="9" />
+   <Label fx:id="h8" text="-" GridPane.columnIndex="5" GridPane.rowIndex="10" />
+   <Label fx:id="m8" text="-" GridPane.columnIndex="7" GridPane.rowIndex="10" />
+   <Label fx:id="h9" text="-" GridPane.columnIndex="5" GridPane.rowIndex="11" />
+   <Label fx:id="m9" text="-" GridPane.columnIndex="7" GridPane.rowIndex="11" />
+   <Label fx:id="h10" text="-" GridPane.columnIndex="5" GridPane.rowIndex="12" />
+   <Label fx:id="m10" text="-" GridPane.columnIndex="7" GridPane.rowIndex="12" />
    <Button fx:id="copy" mnemonicParsing="false" text="Copy to clipboard" GridPane.columnIndex="5" GridPane.rowIndex="25" />
    <Label fx:id="outLabel" text="output.." GridPane.columnIndex="5" GridPane.rowIndex="23" />
-   <Slider fx:id="hs" blockIncrement="1.0" majorTickUnit="12.0" max="23.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="5" GridPane.rowIndex="18" />
-   <Slider fx:id="ms" blockIncrement="1.0" majorTickUnit="15.0" max="59.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="7" GridPane.rowIndex="18" />
+   <Slider fx:id="hs" blockIncrement="1.0" disable="true" majorTickUnit="12.0" max="23.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="5" GridPane.rowIndex="18" />
+   <Slider fx:id="ms" blockIncrement="7.5" disable="true" majorTickUnit="15.0" max="59.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="7" GridPane.rowIndex="18" />
    <Label text="1" GridPane.columnIndex="4" GridPane.rowIndex="3" />
    <Label text="#" GridPane.columnIndex="4" GridPane.rowIndex="1" />
    <Label text="2" GridPane.columnIndex="4" GridPane.rowIndex="4" />
@@ -60,8 +60,8 @@
    </RadioButton>
    <RadioButton fx:id="rb2" mnemonicParsing="false" toggleGroup="$rb" GridPane.columnIndex="3" GridPane.rowIndex="4" />
    <RadioButton fx:id="rb3" mnemonicParsing="false" toggleGroup="$rb" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-   <CheckBox fx:id="cbNull" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="18" />
-   <Label text="null" GridPane.columnIndex="3" GridPane.rowIndex="17" />
+   <CheckBox fx:id="cbEnable" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="18" />
+   <Label text="Enable" GridPane.columnIndex="3" GridPane.rowIndex="17" />
 
    <columnConstraints>
       <ColumnConstraints />

@@ -21,7 +21,7 @@ public class Controller {
     private Map<Integer, List<Label>> hmLabelsByIndex;
 
     @FXML
-    private CheckBox cbNull;
+    private CheckBox cbEnable;
 
     @FXML
     private Slider hs, ms;
@@ -52,30 +52,43 @@ public class Controller {
                 hx = hmLabelsSel.get(0);
                 mx = hmLabelsSel.get(1);
 
-                hs.setValue(hx.getText() != "" ? Double.parseDouble(hx.getText()) : 0.0);
-                ms.setValue(mx.getText() != "" ? Double.parseDouble(mx.getText()) : 0.0);
+                hs.setValue(hx.getText().equals("-") ? 0.0 : Double.parseDouble(hx.getText()));
+                ms.setValue(mx.getText().equals("-") ? 0.0 : Double.parseDouble(mx.getText()));
 
-               cbNull.setSelected(hx.getText() == null && mx.getText() == null);
+               cbEnable.setSelected(!(hx.getText().equals("-") || mx.getText().equals("-")));
         });
 
-        cbNull.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
-            hs.setDisable(newValue);
-            hs.setValue(0.0);
-            hx.setText(newValue ? "" : String.format("%02d", (int)hs.getValue()));
-            ms.setDisable(newValue);
-            ms.setValue(0.0);
-            mx.setText(newValue ? "" : String.format("%02d", (int)ms.getValue()));
-            updateOut();
+        cbEnable.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            hs.setDisable(oldValue);
+            ms.setDisable(oldValue);
+
+            if (newValue && hx.getText().equals("-") && mx.getText().equals("-")) {
+                hx.setText("00");
+                mx.setText("00");
+            } else {
+                hx.setText("-");
+                hs.setValue(0.0);
+                mx.setText("-");
+                ms.setValue(0.0);
+            }
+
+            //            System.out.println(newValue);
+
+//            hs.setValue(0.0);
+//            hx.setText(oldValue ? "-" : String.format("%02d", (int)hs.getValue()));
+
+//            ms.setValue(0.0);
+//            mx.setText(oldValue ? "-" : String.format("%02d", (int)ms.getValue()));
+//            updateOut();
         });
 
-        hs.valueProperty().addListener((obs, ov, nv) -> { hx.setText(String.format("%02d", nv.intValue())); updateOut(); });
-        ms.valueProperty().addListener((obs, ov, nv) -> { mx.setText(String.format("%02d", nv.intValue())); updateOut(); });
+        hs.valueProperty().addListener((obs, ov, nv) -> { if (cbEnable.isSelected()) hx.setText(String.format("%02d", nv.intValue())); updateOut(); });
+        ms.valueProperty().addListener((obs, ov, nv) -> { if (cbEnable.isSelected()) mx.setText(String.format("%02d", nv.intValue())); updateOut(); });
     }
 
     private void updateOut() {
-        outLabel.setText(timeStringToHexStringConcat(h1.getText() == "" && m1.getText() == "" ? "0" : h1.getText() + m1.getText(),
-                h2.getText() == "" && m2.getText() == "" ? "0" : h2.getText() + m2.getText()));
+        outLabel.setText(timeStringToHexStringConcat(h1.getText() + m1.getText(),
+                h2.getText() + m2.getText()));
     }
 
     public static String timeStringToHexStringConcat(String ...strings) {
@@ -83,10 +96,13 @@ public class Controller {
         // strings e.g. "1730", "1800", "1830", "1930", "2015", ...
         // midnight could be "0000" either "2400", it doesn't matter!
 
+        // TODO get sequence number from a field (allowed values int:0..127)
         String hexString = Integer.toHexString(123).toUpperCase();    // 123 = sequence number
 
+        // TODO unit res. (LSB) = 7min 30sec
+
         for (String s: strings)
-            hexString = hexString.concat(s.equals("0") ? "00" :
+            hexString = hexString.concat(s.equals("0") || s.contains("-") ? "00" :
                     String.format("%02X", (int)((((double)Integer.parseInt(s.substring(0, 2).equals("00") ? "24" :
                             s.substring(0, 2)) + (Integer.parseInt(s.substring(2,4)) / 60.0)) * 60.0)/7.5)));
 
