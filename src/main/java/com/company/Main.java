@@ -6,6 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class Main extends Application {
 
     @Override
@@ -17,6 +21,33 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
+//
+//        String startTime = "00:00";
+//        int minutes = 1440;
+//        int h = minutes / 60 + Integer.parseInt(startTime.substring(0,1));
+//        int m = minutes % 60 + Integer.parseInt(startTime.substring(3,4));
+//        String newtime = h+":"+m;
+//
+//        System.out.println(newtime);
+
+
+        double taktTime = 0;
+        long timeInMilliSeconds = (long) Math.floor(taktTime * 60 * 1000);
+        Date date = new Date(timeInMilliSeconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        System.out.println(sdf.format(date));
+
+
+        int minutes = 1440;
+        int h = minutes / 60;
+        int m = minutes % 60;
+        String newtime = h+":"+m;
+
+        System.out.println(newtime);
+
+
         launch(args);
     }
 }

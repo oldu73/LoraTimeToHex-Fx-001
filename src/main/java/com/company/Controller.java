@@ -1,7 +1,5 @@
 package com.company;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -10,67 +8,42 @@ import java.util.*;
 public class Controller {
 
     @FXML
+    private Label seqL;
+
+    @FXML
+    private Slider seqS;
+
+    @FXML
     private ToggleGroup rb;
 
-    private Label hx, mx;
+    private Label hhmmx;
 
     @FXML
-    private Label h1, m1, h2, m2;
+    private Label hhmm1, hhmm2, hhmm3, hhmm4;
 
-    private List<Label> hmLabels;
-    private Map<Integer, List<Label>> hmLabelsByIndex;
-
-    @FXML
-    private CheckBox cbEnable;
+    private Map<Integer, Label> hhmmLabelsByIndex;
 
     @FXML
-    private Slider hs, ms;
+    private Slider hhmmS;
 
     @FXML
-    private Label outLabel;
-
-    private void initHMLabels() {
-        hmLabelsByIndex = new HashMap<>();
-
-        hmLabels = Arrays.asList(new Label[]{h1, m1});
-        hmLabelsByIndex.put(0, hmLabels);
-
-        hmLabels = Arrays.asList(new Label[]{h2, m2});
-        hmLabelsByIndex.put(1, hmLabels);
-
-        hmLabels = hmLabelsByIndex.get(0);
-        hx = hmLabels.get(0);
-        mx = hmLabels.get(1);
-    }
+    private Label outL;
 
     public void initialize() {
-        initHMLabels();
+        hhmmLabelsByIndex = new HashMap<>();
+
+        hhmmLabelsByIndex.put(0, hhmm1);
+        hhmmLabelsByIndex.put(1, hhmm2);
+
+        hhmmx = hhmmLabelsByIndex.get(0);
 
         rb.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
-                List<Label> hmLabelsSel = hmLabelsByIndex.get(rb.getToggles().indexOf(rb.getSelectedToggle()));
+            hhmmx = hhmmLabelsByIndex.get(rb.getToggles().indexOf(rb.getSelectedToggle()));
 
-                hx = hmLabelsSel.get(0);
-                mx = hmLabelsSel.get(1);
-
-                hs.setValue(hx.getText().equals("-") ? 0.0 : Double.parseDouble(hx.getText()));
-                ms.setValue(mx.getText().equals("-") ? 0.0 : Double.parseDouble(mx.getText()));
-
-               cbEnable.setSelected(!(hx.getText().equals("-") || mx.getText().equals("-")));
+//                hs.setValue(hx.getText().equals("-") ? 0.0 : Double.parseDouble(hx.getText()));
         });
 
-        cbEnable.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            hs.setDisable(oldValue);
-            ms.setDisable(oldValue);
 
-            if (newValue && hx.getText().equals("-") && mx.getText().equals("-")) {
-                hx.setText("00");
-                mx.setText("00");
-            } else {
-                hx.setText("-");
-                hs.setValue(0.0);
-                mx.setText("-");
-                ms.setValue(0.0);
-            }
 
             //            System.out.println(newValue);
 
@@ -80,15 +53,22 @@ public class Controller {
 //            ms.setValue(0.0);
 //            mx.setText(oldValue ? "-" : String.format("%02d", (int)ms.getValue()));
 //            updateOut();
-        });
 
-        hs.valueProperty().addListener((obs, ov, nv) -> { if (cbEnable.isSelected()) hx.setText(String.format("%02d", nv.intValue())); updateOut(); });
-        ms.valueProperty().addListener((obs, ov, nv) -> { if (cbEnable.isSelected()) mx.setText(String.format("%02d", nv.intValue())); updateOut(); });
+
+//        hhmmS.valueProperty().addListener((obs, ov, nv) -> { if (cbEnable.isSelected()) hx.setText(String.format("%02d", nv.intValue())); updateOut(); });
+
+        hhmmS.valueProperty().addListener((obs, ov, nv) -> {
+
+            Double hh = (nv.intValue() * 7.5) / 60;
+            Double mm = (nv.intValue() * 7.5) % 60;
+
+            hhmmx.setText(String.format("%02d", hh) + mm.toString());
+        });
     }
 
     private void updateOut() {
-        outLabel.setText(timeStringToHexStringConcat(h1.getText() + m1.getText(),
-                h2.getText() + m2.getText()));
+        outL.setText(timeStringToHexStringConcat(hhmm1.getText(),
+                hhmm2.getText()));
     }
 
     public static String timeStringToHexStringConcat(String ...strings) {
