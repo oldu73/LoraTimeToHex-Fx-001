@@ -22,9 +22,9 @@
    <Label fx:id="hhmm8" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="12" />
    <Label fx:id="hhmm9" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="13" />
    <Label fx:id="hhmm10" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="14" />
-   <Button fx:id="copy" mnemonicParsing="false" text="Copy to clipboard" GridPane.columnIndex="5" GridPane.rowIndex="29" />
-   <Label fx:id="outL" text="0000000000000000000000" GridPane.columnIndex="5" GridPane.rowIndex="27" />
-   <Slider fx:id="hhS" blockIncrement="1.0" majorTickUnit="6.0" max="24.0" minorTickCount="5" prefHeight="38.0" prefWidth="139.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="5" GridPane.rowIndex="22" />
+   <Button fx:id="copy" mnemonicParsing="false" text="Copy to clipboard" GridPane.columnIndex="5" GridPane.rowIndex="31" />
+   <Label fx:id="outL" text="0000000000000000000000" GridPane.columnIndex="5" GridPane.rowIndex="29" />
+   <Slider fx:id="hhS" blockIncrement="1.0" majorTickUnit="6.0" max="24.0" minorTickCount="5" prefHeight="38.0" prefWidth="139.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="5" GridPane.rowIndex="24" />
    <Label text="1" GridPane.columnIndex="4" GridPane.rowIndex="5" />
    <Label text="#" GridPane.columnIndex="4" GridPane.rowIndex="3" />
    <Label text="2" GridPane.columnIndex="4" GridPane.rowIndex="6" />
@@ -37,7 +37,7 @@
    <Label text="9" GridPane.columnIndex="4" GridPane.rowIndex="13" />
    <Label prefHeight="17.0" prefWidth="47.0" text="10" GridPane.columnIndex="4" GridPane.rowIndex="14" />
    <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-   <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="25" />
+   <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="27" />
    <RadioButton fx:id="rb1" mnemonicParsing="false" selected="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
       <toggleGroup>
          <ToggleGroup fx:id="rb" />
@@ -49,10 +49,16 @@
    <Label prefHeight="17.0" prefWidth="67.0" text="Seq." GridPane.columnIndex="3" GridPane.rowIndex="1" />
    <Label text="#" GridPane.columnIndex="4" GridPane.rowIndex="1" />
    <Label fx:id="seqL" text="00" GridPane.columnIndex="5" />
-   <Label text="00:00:00 = Disable" GridPane.columnIndex="5" GridPane.rowIndex="17" />
-   <Label text="Leg." GridPane.columnIndex="3" GridPane.rowIndex="17" />
-   <Slider fx:id="mmS" blockIncrement="1.0" majorTickUnit="7.5" max="52.5" minorTickCount="0" prefHeight="38.0" prefWidth="287.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="7" GridPane.rowIndex="22" />
-   <Label text="24:00:00 = midnight" GridPane.columnIndex="5" GridPane.rowIndex="18" />
+   <Label fx:id="hhmmxCp" text=".." GridPane.columnIndex="5" GridPane.rowIndex="18" />
+   <Label text="Sel." GridPane.columnIndex="3" GridPane.rowIndex="18" />
+   <Slider fx:id="mmS" blockIncrement="1.0" majorTickUnit="7.5" max="52.5" minorTickCount="0" prefHeight="38.0" prefWidth="287.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="7" GridPane.rowIndex="24" />
+   <Label fx:id="selHhMmIndex" text=".." GridPane.columnIndex="4" GridPane.rowIndex="18" />
+   <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="16" />
+   <Separator prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="16" />
+   <Separator prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="27" />
+   <Label fx:id="hhmmxStatus" text=".." GridPane.columnIndex="7" GridPane.rowIndex="18" />
+   <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="19" />
+   <Separator prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="19" />
 
    <columnConstraints>
       <ColumnConstraints />
@@ -83,6 +89,8 @@
       <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />

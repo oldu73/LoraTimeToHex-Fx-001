@@ -7,6 +7,9 @@ import java.util.*;
 
 public class Controller {
 
+    // TODO code cleaning and refactoring, naming, GUI layout improvement
+    // TODO put
+
     @FXML
     private Label seqL;
 
@@ -16,7 +19,16 @@ public class Controller {
     @FXML
     private ToggleGroup rb;
 
+    @FXML
+    private Label selHhMmIndex;
+
     private Label hhmmx;
+
+    @FXML
+    private Label hhmmxCp;
+
+    @FXML
+    Label hhmmxStatus;
 
     @FXML
     private Label hhmm1, hhmm2, hhmm3, hhmm4;
@@ -38,14 +50,27 @@ public class Controller {
         hhmmLabelsByIndex.put(0, hhmm1);
         hhmmLabelsByIndex.put(1, hhmm2);
 
+        selHhMmIndex.setText(String.valueOf(rb.getToggles().indexOf(rb.getSelectedToggle()) + 1));
         hhmmx = hhmmLabelsByIndex.get(0);
+        hhmmxCp.textProperty().bind(hhmmx.textProperty());
+        hhmmxStatus.setText("disabled!");
+        hhmmxStatus.setDisable(true);
+        hhmmxCp.setDisable(true);
 
         seqS.valueProperty().addListener((obs, ov, nv) -> seqL.setText(String.format("%02d", nv.intValue())));
 
         rb.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
-            hhmmx = hhmmLabelsByIndex.get(rb.getToggles().indexOf(rb.getSelectedToggle()));
 
-//                hs.setValue(hx.getText().equals("-") ? 0.0 : Double.parseDouble(hx.getText()));
+            int selectedToggle = rb.getToggles().indexOf(rb.getSelectedToggle());
+
+            hhmmx = hhmmLabelsByIndex.get(selectedToggle);
+            hhmmxCp.textProperty().bind(hhmmx.textProperty());
+            selHhMmIndex.setText(String.valueOf(selectedToggle + 1));
+
+            double hhSDouble = Double.parseDouble(hhmmx.getText().substring(0, 2));
+            hhS.setValue(hhSDouble);
+            double mmSDouble = Double.parseDouble(hhmmx.getText().substring(3, 5)) + (Double.parseDouble(hhmmx.getText().substring(6, 8)) / 60.0);
+            mmS.setValue(mmSDouble);
         });
 
 
@@ -107,7 +132,23 @@ public class Controller {
         minutes = (aDuration - hours * 3600) / 60;
         seconds = (aDuration - (hours * 3600 + minutes * 60));
 
-        hhmmx.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+        String out = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+        hhmmx.setText(out);
+
+        if (out.equals("00:00:00")) {
+            hhmmxStatus.setText("disabled!");
+            hhmmxStatus.setDisable(true);
+            hhmmxCp.setDisable(true);
+        } else if (out.equals("24:00:00")) {
+            hhmmxStatus.setText("midnight");
+            hhmmxStatus.setDisable(false);
+            hhmmxCp.setDisable(false);
+        } else {
+            hhmmxStatus.setText("");
+            hhmmxStatus.setDisable(false);
+            hhmmxCp.setDisable(false);
+        }
 
         double hh = hhS.getValue();
         double mm = mmS.getValue();
@@ -122,6 +163,9 @@ public class Controller {
 
     public static String timeStringToHexStringConcat(String ...strings) {
 
+        // TODO use (all conversion process here, not scattered somewhere in code above) and put this method in a Converter class of an util package
+        // TODO Unit test this method (c.f. https://github.com/oldu73/LoraTimeToHex)
+
         // strings e.g. "1730", "1800", "1830", "1930", "2015", ...
         // midnight could be "0000" either "2400", it doesn't matter!
 
@@ -135,10 +179,11 @@ public class Controller {
                     String.format("%02X", (int)((((double)Integer.parseInt(s.substring(0, 2).equals("00") ? "24" :
                             s.substring(0, 2)) + (Integer.parseInt(s.substring(2,4)) / 60.0)) * 60.0)/7.5)));
 
+        // TODO complete output string missing values with '00'
+
         // hexString e.g. "7B8C90949CA2..."
 
         return hexString;
-
     }
 
 }
