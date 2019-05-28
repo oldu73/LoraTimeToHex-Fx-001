@@ -59,10 +59,23 @@ public class Controller {
 
         hhmmS.valueProperty().addListener((obs, ov, nv) -> {
 
-            Double hh = (nv.intValue() * 7.5) / 60;
-            Double mm = (nv.intValue() * 7.5) % 60;
+//            Double hh = (nv.intValue() * 7.5) / 60;
+//            Double mm = (nv.intValue() * 7.5) % 60;
 
-            hhmmx.setText(String.format("%02d", hh) + mm.toString());
+//            hhmmx.setText(String.format("%02d", hh) + mm.toString());
+
+            int hours = 0, minutes = 0, seconds = 0;
+
+            int aDuration = (int)(nv.intValue() * 60 * 7.5);
+
+            hours = aDuration / 3600;
+            minutes = (aDuration - hours * 3600) / 60;
+            seconds = (aDuration - (hours * 3600 + minutes * 60));
+
+            hhmmx.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+
+            outL.setText(String.valueOf(nv.intValue()));
+
         });
     }
 
