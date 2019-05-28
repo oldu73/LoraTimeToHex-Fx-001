@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -32,7 +34,7 @@ public class Main extends Application {
 //        System.out.println(newtime);
 
 
-        double taktTime = 0;
+        double taktTime = 7.5;
         long timeInMilliSeconds = (long) Math.floor(taktTime * 60 * 1000);
         Date date = new Date(timeInMilliSeconds);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -46,6 +48,39 @@ public class Main extends Application {
         String newtime = h+":"+m;
 
         System.out.println(newtime);
+
+
+        System.out.println(Duration.ofSeconds(-2L, 999999998));
+
+        Duration dur = Duration.ofMillis(450000);
+
+//        System.out.println(String.format("%02d:%02d:%02d", dur.get(ChronoUnit.HOURS), dur.get(ChronoUnit.MINUTES), dur.get(ChronoUnit.SECONDS)));
+
+
+//        System.out.println(dur.get(ChronoUnit.MINUTES));
+
+//        Duration d = Duration.ofSeconds(86000);
+
+
+        Duration d = Duration.ofSeconds(450);
+
+
+        System.out.println(d);
+
+
+        String result = "";
+
+        int hours = 0, minute = 0, seconds = 0;
+
+        int aDuration = 86400;
+
+        hours = aDuration / 3600;
+        minutes = (aDuration - hours * 3600) / 60;
+        seconds = (aDuration - (hours * 3600 + minutes * 60));
+
+        result = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+        System.out.println(result);
 
 
         launch(args);
