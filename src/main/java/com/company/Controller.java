@@ -40,6 +40,8 @@ public class Controller {
 
         hhmmx = hhmmLabelsByIndex.get(0);
 
+        seqS.valueProperty().addListener((obs, ov, nv) -> seqL.setText(String.format("%02d", nv.intValue())));
+
         rb.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
             hhmmx = hhmmLabelsByIndex.get(rb.getToggles().indexOf(rb.getSelectedToggle()));
 

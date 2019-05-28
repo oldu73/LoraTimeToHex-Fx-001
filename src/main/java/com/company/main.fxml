@@ -45,7 +45,7 @@
    </RadioButton>
    <RadioButton fx:id="rb2" mnemonicParsing="false" toggleGroup="$rb" GridPane.columnIndex="3" GridPane.rowIndex="6" />
    <RadioButton fx:id="rb3" mnemonicParsing="false" toggleGroup="$rb" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-   <Slider fx:id="seqS" max="127.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+   <Slider fx:id="seqS" blockIncrement="1.0" max="127.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
    <Label prefHeight="17.0" prefWidth="67.0" text="Seq." GridPane.columnIndex="3" GridPane.rowIndex="1" />
    <Label text="#" GridPane.columnIndex="4" GridPane.rowIndex="1" />
    <Label fx:id="seqL" text="00" GridPane.columnIndex="5" />
