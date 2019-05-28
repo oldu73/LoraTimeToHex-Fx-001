@@ -24,7 +24,10 @@ public class Controller {
     private Map<Integer, Label> hhmmLabelsByIndex;
 
     @FXML
-    private Slider hhmmS;
+    private Slider hhS;
+
+    @FXML
+    private Slider mmS;
 
     @FXML
     private Label outL;
@@ -57,16 +60,21 @@ public class Controller {
 
 //        hhmmS.valueProperty().addListener((obs, ov, nv) -> { if (cbEnable.isSelected()) hx.setText(String.format("%02d", nv.intValue())); updateOut(); });
 
-        hhmmS.valueProperty().addListener((obs, ov, nv) -> {
+        hhS.valueProperty().addListener((obs, ov, nv) -> {
 
 //            Double hh = (nv.intValue() * 7.5) / 60;
 //            Double mm = (nv.intValue() * 7.5) % 60;
 
 //            hhmmx.setText(String.format("%02d", hh) + mm.toString());
 
+            if (nv.intValue() == 24) {
+                mmS.setDisable(true);
+                mmS.setValue(0.0);
+            } else mmS.setDisable(false);
+
             int hours = 0, minutes = 0, seconds = 0;
 
-            int aDuration = (int)(nv.intValue() * 60 * 7.5);
+            int aDuration = (int)(nv.intValue() * 8 * 60 * 7.5) + ((int) (mmS.getValue() * 60));
 
             hours = aDuration / 3600;
             minutes = (aDuration - hours * 3600) / 60;

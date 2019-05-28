@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="800.0" stylesheets="/main.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller">
-   <Label prefHeight="17.0" prefWidth="62.0" text="HHmm" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+<GridPane alignment="center" hgap="10" prefHeight="696.0" prefWidth="735.0" stylesheets="/main.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller">
+   <Label prefHeight="17.0" prefWidth="62.0" text="HH:mm:ss" GridPane.columnIndex="5" GridPane.rowIndex="3" />
    <Label fx:id="hhmm1" text="0000" GridPane.columnIndex="5" GridPane.rowIndex="5" />
    <Label fx:id="hhmm2" text="0000" GridPane.columnIndex="5" GridPane.rowIndex="6" />
    <Label fx:id="hhmm3" text="0000" GridPane.columnIndex="5" GridPane.rowIndex="7" />
@@ -22,9 +22,9 @@
    <Label fx:id="hhmm8" text="0000" GridPane.columnIndex="5" GridPane.rowIndex="12" />
    <Label fx:id="hhmm9" text="0000" GridPane.columnIndex="5" GridPane.rowIndex="13" />
    <Label fx:id="hhmm10" text="0000" GridPane.columnIndex="5" GridPane.rowIndex="14" />
-   <Button fx:id="copy" mnemonicParsing="false" text="Copy to clipboard" GridPane.columnIndex="5" GridPane.rowIndex="28" />
-   <Label fx:id="outL" text="output.." GridPane.columnIndex="5" GridPane.rowIndex="26" />
-   <Slider fx:id="hhmmS" blockIncrement="1.0" majorTickUnit="12.0" max="192.0" prefHeight="38.0" prefWidth="322.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="5" GridPane.rowIndex="21" />
+   <Button fx:id="copy" mnemonicParsing="false" text="Copy to clipboard" GridPane.columnIndex="5" GridPane.rowIndex="29" />
+   <Label fx:id="outL" text="output.." GridPane.columnIndex="5" GridPane.rowIndex="27" />
+   <Slider fx:id="hhS" blockIncrement="1.0" majorTickUnit="6.0" max="24.0" minorTickCount="5" prefHeight="38.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="5" GridPane.rowIndex="22" />
    <Label text="1" GridPane.columnIndex="4" GridPane.rowIndex="5" />
    <Label text="#" GridPane.columnIndex="4" GridPane.rowIndex="3" />
    <Label text="2" GridPane.columnIndex="4" GridPane.rowIndex="6" />
@@ -37,7 +37,7 @@
    <Label text="9" GridPane.columnIndex="4" GridPane.rowIndex="13" />
    <Label text="10" GridPane.columnIndex="4" GridPane.rowIndex="14" />
    <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-   <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="24" />
+   <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="25" />
    <RadioButton fx:id="rb1" mnemonicParsing="false" selected="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
       <toggleGroup>
          <ToggleGroup fx:id="rb" />
@@ -46,11 +46,13 @@
    <RadioButton fx:id="rb2" mnemonicParsing="false" toggleGroup="$rb" GridPane.columnIndex="3" GridPane.rowIndex="6" />
    <RadioButton fx:id="rb3" mnemonicParsing="false" toggleGroup="$rb" GridPane.columnIndex="3" GridPane.rowIndex="7" />
    <Slider fx:id="seqS" max="127.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-   <Label text="Seq." GridPane.columnIndex="3" GridPane.rowIndex="1" />
+   <Label prefHeight="17.0" prefWidth="200.0" text="Seq." GridPane.columnIndex="3" GridPane.rowIndex="1" />
    <Label text="#" GridPane.columnIndex="4" GridPane.rowIndex="1" />
    <Label fx:id="seqL" text=".." GridPane.columnIndex="5" />
-   <Label text="0000 = Disable / 2400 = midnight" GridPane.columnIndex="5" GridPane.rowIndex="17" />
+   <Label text="00:00:00 = Disable" GridPane.columnIndex="5" GridPane.rowIndex="17" />
    <Label text="Leg." GridPane.columnIndex="3" GridPane.rowIndex="17" />
+   <Slider fx:id="mmS" majorTickUnit="7.5" max="52.5" minorTickCount="0" prefHeight="38.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="7" GridPane.rowIndex="22" />
+   <Label text="24:00:00 = midnight" GridPane.columnIndex="5" GridPane.rowIndex="18" />
 
    <columnConstraints>
       <ColumnConstraints />
@@ -78,8 +80,10 @@
       <ColumnConstraints />
       <ColumnConstraints />
       <ColumnConstraints />
+      <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
+      <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
