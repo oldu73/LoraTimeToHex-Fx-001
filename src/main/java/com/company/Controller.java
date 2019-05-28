@@ -72,6 +72,7 @@ public class Controller {
                 mmS.setValue(0.0);
             } else mmS.setDisable(false);
 
+            /*
             int hours = 0, minutes = 0, seconds = 0;
 
             int aDuration = (int)(nv.intValue() * 8 * 60 * 7.5) + ((int) (mmS.getValue() * 60));
@@ -81,10 +82,35 @@ public class Controller {
             seconds = (aDuration - (hours * 3600 + minutes * 60));
 
             hhmmx.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+             */
 
-            outL.setText(String.valueOf(nv.intValue()));
+            hhS.setValue(nv.intValue());
 
+            timeSelToString();
         });
+
+        mmS.valueProperty().addListener((obs, ov, nv) -> {
+            mmS.setValue(nv.doubleValue() - (nv.doubleValue() % 7.5));
+            timeSelToString();
+        });
+
+    }
+
+    private void timeSelToString() {
+        int hours = 0, minutes = 0, seconds = 0;
+
+        int aDuration = ((int) ((int) (hhS.getValue()) * 8 * 60 * 7.5)) + ((int) (mmS.getValue() * 60));
+
+        hours = aDuration / 3600;
+        minutes = (aDuration - hours * 3600) / 60;
+        seconds = (aDuration - (hours * 3600 + minutes * 60));
+
+        hhmmx.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+
+        double hh = hhS.getValue();
+        double mm = mmS.getValue();
+
+        outL.setText(Integer.toHexString((int) (((hh * 60.0) + mm) / 7.5)).toUpperCase());
     }
 
     private void updateOut() {
