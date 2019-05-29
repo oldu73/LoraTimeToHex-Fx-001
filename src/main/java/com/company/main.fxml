@@ -12,10 +12,10 @@
 
 <GridPane alignment="center" hgap="10" prefHeight="696.0" prefWidth="735.0" stylesheets="/main.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller">
    <Label prefHeight="17.0" prefWidth="62.0" text="HH:mm:ss" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-   <Label fx:id="hhmm1" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-   <Label fx:id="hhmm2" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-   <Label fx:id="hhmm3" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-   <Label fx:id="hhmm4" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+   <Label fx:id="hhMmSs1" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+   <Label fx:id="hhMmSs2" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+   <Label fx:id="hhMmSs3" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+   <Label fx:id="hhMmSs4" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="8" />
    <Label fx:id="hhmm5" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="9" />
    <Label fx:id="hhmm6" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="10" />
    <Label fx:id="hhmm7" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="11" />
@@ -23,8 +23,8 @@
    <Label fx:id="hhmm9" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="13" />
    <Label fx:id="hhmm10" text="00:00:00" GridPane.columnIndex="5" GridPane.rowIndex="14" />
    <Button fx:id="copy" mnemonicParsing="false" text="Copy to clipboard" GridPane.columnIndex="5" GridPane.rowIndex="31" />
-   <Label fx:id="outL" text="0000000000000000000000" GridPane.columnIndex="5" GridPane.rowIndex="29" />
-   <Slider fx:id="hhS" blockIncrement="1.0" majorTickUnit="6.0" max="24.0" minorTickCount="5" prefHeight="38.0" prefWidth="139.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="5" GridPane.rowIndex="24" />
+   <Label fx:id="outputLabel" text="0000000000000000000000" GridPane.columnIndex="5" GridPane.rowIndex="29" />
+   <Slider fx:id="hhSlider" blockIncrement="1.0" majorTickUnit="6.0" max="24.0" minorTickCount="5" prefHeight="38.0" prefWidth="139.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="5" GridPane.rowIndex="24" />
    <Label text="1" GridPane.columnIndex="4" GridPane.rowIndex="5" />
    <Label text="#" GridPane.columnIndex="4" GridPane.rowIndex="3" />
    <Label text="2" GridPane.columnIndex="4" GridPane.rowIndex="6" />
@@ -40,25 +40,26 @@
    <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="27" />
    <RadioButton fx:id="rb1" mnemonicParsing="false" selected="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
       <toggleGroup>
-         <ToggleGroup fx:id="rb" />
+         <ToggleGroup fx:id="hhMmSsRecordSelectToggleGroup" />
       </toggleGroup>
    </RadioButton>
-   <RadioButton fx:id="rb2" mnemonicParsing="false" toggleGroup="$rb" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-   <RadioButton fx:id="rb3" mnemonicParsing="false" toggleGroup="$rb" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-   <Slider fx:id="seqS" blockIncrement="1.0" max="127.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+   <RadioButton fx:id="rb2" mnemonicParsing="false" toggleGroup="$hhMmSsRecordSelectToggleGroup" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+   <RadioButton fx:id="rb3" mnemonicParsing="false" toggleGroup="$hhMmSsRecordSelectToggleGroup" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+   <Slider fx:id="sequenceNumberSlider" blockIncrement="1.0" max="127.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
    <Label prefHeight="17.0" prefWidth="67.0" text="Seq." GridPane.columnIndex="3" GridPane.rowIndex="1" />
    <Label text="#" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-   <Label fx:id="seqL" text="00" GridPane.columnIndex="5" />
-   <Label fx:id="hhmmxCp" text=".." GridPane.columnIndex="5" GridPane.rowIndex="18" />
+   <Label fx:id="sequenceNumberLabel" text="00" GridPane.columnIndex="5" />
+   <Label fx:id="hhMmSsXCopyLabel" text=".." GridPane.columnIndex="5" GridPane.rowIndex="18" />
    <Label text="Sel." GridPane.columnIndex="3" GridPane.rowIndex="18" />
-   <Slider fx:id="mmS" blockIncrement="1.0" majorTickUnit="7.5" max="52.5" minorTickCount="0" prefHeight="38.0" prefWidth="287.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="7" GridPane.rowIndex="24" />
-   <Label fx:id="selHhMmIndex" text=".." GridPane.columnIndex="4" GridPane.rowIndex="18" />
+   <Slider fx:id="mmSlider" blockIncrement="1.0" majorTickUnit="7.5" max="52.5" minorTickCount="0" prefHeight="38.0" prefWidth="287.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="7" GridPane.rowIndex="24" />
+   <Label fx:id="selectedHhMmSsRecordIndexLabel" text=".." GridPane.columnIndex="4" GridPane.rowIndex="18" />
    <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="16" />
    <Separator prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="16" />
    <Separator prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="27" />
-   <Label fx:id="hhmmxStatus" text=".." GridPane.columnIndex="7" GridPane.rowIndex="18" />
+   <Label fx:id="hhMmSsXStatus" text=".." GridPane.columnIndex="7" GridPane.rowIndex="18" />
    <Separator prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="19" />
    <Separator prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="19" />
+   <Button mnemonicParsing="false" onAction="#handleResetButtonAction" text="Reset" GridPane.columnIndex="3" GridPane.rowIndex="24" />
 
    <columnConstraints>
       <ColumnConstraints />

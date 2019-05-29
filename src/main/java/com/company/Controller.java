@@ -1,165 +1,155 @@
 package com.company;
 
+import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Controller {
 
     // TODO code cleaning and refactoring, naming, GUI layout improvement
-    // TODO put
+    // TODO WARNING: Resource "/main.css" not found.
+
+    private static final String DISABLED_TEXT = "disabled!",
+            DISABLED_HHMMSS = "00:00:00",
+            MIDNIGHT_TEXT = "midnight",
+            MIDNIGHT_HHMMSS = "24:00:00",
+            EMPTY_STR = "";
 
     @FXML
-    private Label seqL;
+    private Label sequenceNumberLabel,
+            selectedHhMmSsRecordIndexLabel,
+            hhMmSsXCopyLabel,
+            hhMmSsXStatus,
+            outputLabel,
+            hhMmSs1, hhMmSs2, hhMmSs3, hhMmSs4;
 
     @FXML
-    private Slider seqS;
+    private Slider sequenceNumberSlider,
+            hhSlider,
+            mmSlider;
 
     @FXML
-    private ToggleGroup rb;
+    private ToggleGroup hhMmSsRecordSelectToggleGroup;
+
+    private Label hhMmSsxLabel;
+
+    private Map<Integer, Label> hhMmSsLabelsByIndex;
+
+    private ChangeListener<? super Number> hhSliderListener;
+    private ChangeListener<? super Number> mmSliderListener;
 
     @FXML
-    private Label selHhMmIndex;
-
-    private Label hhmmx;
-
-    @FXML
-    private Label hhmmxCp;
-
-    @FXML
-    Label hhmmxStatus;
-
-    @FXML
-    private Label hhmm1, hhmm2, hhmm3, hhmm4;
-
-    private Map<Integer, Label> hhmmLabelsByIndex;
-
-    @FXML
-    private Slider hhS;
-
-    @FXML
-    private Slider mmS;
-
-    @FXML
-    private Label outL;
+    private void handleResetButtonAction(ActionEvent event) {
+        hhSlider.setValue(0.0);
+        mmSlider.setValue(0.0);
+    }
 
     public void initialize() {
-        hhmmLabelsByIndex = new HashMap<>();
 
-        hhmmLabelsByIndex.put(0, hhmm1);
-        hhmmLabelsByIndex.put(1, hhmm2);
+        hhMmSsLabelsByIndex = Stream.of(
+                new AbstractMap.SimpleEntry<>(0, hhMmSs1),
+                new AbstractMap.SimpleEntry<>(1, hhMmSs2))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        selHhMmIndex.setText(String.valueOf(rb.getToggles().indexOf(rb.getSelectedToggle()) + 1));
-        hhmmx = hhmmLabelsByIndex.get(0);
-        hhmmxCp.textProperty().bind(hhmmx.textProperty());
-        hhmmxStatus.setText("disabled!");
-        hhmmxStatus.setDisable(true);
-        hhmmxCp.setDisable(true);
+        selectedHhMmSsRecordIndexLabel.setText(iSelTogglePlusOneStr());
 
-        seqS.valueProperty().addListener((obs, ov, nv) -> seqL.setText(String.format("%02d", nv.intValue())));
+        hhMmSsxLabel = hhMmSsLabelsByIndex.get(0);
 
-        rb.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
+        hhMmSsXCopyLabel.textProperty().bind(hhMmSsxLabel.textProperty());
+        hhMmSsXCopyLabel.setDisable(true);
 
-            int selectedToggle = rb.getToggles().indexOf(rb.getSelectedToggle());
+        hhMmSsXStatus.setText(DISABLED_TEXT);
+        hhMmSsXStatus.setDisable(true);
 
-            hhmmx = hhmmLabelsByIndex.get(selectedToggle);
-            hhmmxCp.textProperty().bind(hhmmx.textProperty());
-            selHhMmIndex.setText(String.valueOf(selectedToggle + 1));
+        sequenceNumberSlider.valueProperty().addListener((obs, ov, nv) -> sequenceNumberLabel.setText(String.format("%02d", nv.intValue())));
 
-            double hhSDouble = Double.parseDouble(hhmmx.getText().substring(0, 2));
-            hhS.setValue(hhSDouble);
-            double mmSDouble = Double.parseDouble(hhmmx.getText().substring(3, 5)) + (Double.parseDouble(hhmmx.getText().substring(6, 8)) / 60.0);
-            mmS.setValue(mmSDouble);
+        hhMmSsRecordSelectToggleGroup.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
+            hhMmSsxLabel = hhMmSsLabelsByIndex.get(iSelToggleInt());
+            hhMmSsXCopyLabel.textProperty().bind(hhMmSsxLabel.textProperty());
+            selectedHhMmSsRecordIndexLabel.setText(iSelTogglePlusOneStr());
+
+            hhSlider.valueProperty().removeListener(hhSliderListener);
+            mmSlider.valueProperty().removeListener(mmSliderListener);
+
+            hhSlider.setValue(Double.parseDouble(hhMmSsxLabel.getText().substring(0, 2)));
+            mmSlider.setValue(Double.parseDouble(hhMmSsxLabel.getText().substring(3, 5)) + (Double.parseDouble(hhMmSsxLabel.getText().substring(6, 8)) / 60.0));
+
+            updateHhMmSsXStatusAndCopyLabel();
+            updateMmSlider();
+
+            hhSlider.valueProperty().addListener(hhSliderListener);
+            mmSlider.valueProperty().addListener(mmSliderListener);
         });
 
-
-
-            //            System.out.println(newValue);
-
-//            hs.setValue(0.0);
-//            hx.setText(oldValue ? "-" : String.format("%02d", (int)hs.getValue()));
-
-//            ms.setValue(0.0);
-//            mx.setText(oldValue ? "-" : String.format("%02d", (int)ms.getValue()));
-//            updateOut();
-
-
-//        hhmmS.valueProperty().addListener((obs, ov, nv) -> { if (cbEnable.isSelected()) hx.setText(String.format("%02d", nv.intValue())); updateOut(); });
-
-        hhS.valueProperty().addListener((obs, ov, nv) -> {
-
-//            Double hh = (nv.intValue() * 7.5) / 60;
-//            Double mm = (nv.intValue() * 7.5) % 60;
-
-//            hhmmx.setText(String.format("%02d", hh) + mm.toString());
-
-            if (nv.intValue() == 24) {
-                mmS.setDisable(true);
-                mmS.setValue(0.0);
-            } else mmS.setDisable(false);
-
-            /*
-            int hours = 0, minutes = 0, seconds = 0;
-
-            int aDuration = (int)(nv.intValue() * 8 * 60 * 7.5) + ((int) (mmS.getValue() * 60));
-
-            hours = aDuration / 3600;
-            minutes = (aDuration - hours * 3600) / 60;
-            seconds = (aDuration - (hours * 3600 + minutes * 60));
-
-            hhmmx.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
-             */
-
-            hhS.setValue(nv.intValue());
-
+        hhSliderListener = (obs, ov, nv) -> {
+            updateMmSlider();
+            hhSlider.setValue(nv.intValue());
             timeSelToString();
-        });
+        };
 
-        mmS.valueProperty().addListener((obs, ov, nv) -> {
-            mmS.setValue(nv.doubleValue() - (nv.doubleValue() % 7.5));
+        hhSlider.valueProperty().addListener(hhSliderListener);
+
+        mmSliderListener = (obs, ov, nv) -> {
+            mmSlider.setValue(nv.doubleValue() - (nv.doubleValue() % 7.5));
             timeSelToString();
-        });
+        };
 
+        mmSlider.valueProperty().addListener(mmSliderListener);
     }
 
     private void timeSelToString() {
         int hours = 0, minutes = 0, seconds = 0;
 
-        int aDuration = ((int) ((int) (hhS.getValue()) * 8 * 60 * 7.5)) + ((int) (mmS.getValue() * 60));
+        int aDuration = ((int) ((int) (hhSlider.getValue()) * 8 * 60 * 7.5)) + ((int) (mmSlider.getValue() * 60));
 
         hours = aDuration / 3600;
         minutes = (aDuration - hours * 3600) / 60;
         seconds = (aDuration - (hours * 3600 + minutes * 60));
 
-        String out = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        hhMmSsxLabel.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 
-        hhmmx.setText(out);
+        updateHhMmSsXStatusAndCopyLabel();
 
-        if (out.equals("00:00:00")) {
-            hhmmxStatus.setText("disabled!");
-            hhmmxStatus.setDisable(true);
-            hhmmxCp.setDisable(true);
-        } else if (out.equals("24:00:00")) {
-            hhmmxStatus.setText("midnight");
-            hhmmxStatus.setDisable(false);
-            hhmmxCp.setDisable(false);
-        } else {
-            hhmmxStatus.setText("");
-            hhmmxStatus.setDisable(false);
-            hhmmxCp.setDisable(false);
-        }
+        double hh = hhSlider.getValue();
+        double mm = mmSlider.getValue();
 
-        double hh = hhS.getValue();
-        double mm = mmS.getValue();
-
-        outL.setText(Integer.toHexString((int) (((hh * 60.0) + mm) / 7.5)).toUpperCase());
+        outputLabel.setText(Integer.toHexString((int) (((hh * 60.0) + mm) / 7.5)).toUpperCase());
     }
 
     private void updateOut() {
-        outL.setText(timeStringToHexStringConcat(hhmm1.getText(),
-                hhmm2.getText()));
+        outputLabel.setText(timeStringToHexStringConcat(hhMmSs1.getText(),
+                hhMmSs2.getText()));
     }
+
+    public static String timeStringToHexStringConcatRS(String ...strings) {
+
+        // strings
+        // strings e.g. "1730", "1800", "1830", "1930", "2015", ...
+        // midnight could be "0000" either "2400", it doesn't matter!
+
+        // TODO get sequence number from a field (allowed values int:0..127)
+        String hexString = Integer.toHexString(123).toUpperCase();    // 123 = sequence number
+
+        // TODO unit res. (LSB) = 7min 30sec
+
+        for (String s: strings)
+            hexString = hexString.concat(s.equals("0") || s.contains("-") ? "00" :
+                    String.format("%02X", (int)((((double)Integer.parseInt(s.substring(0, 2).equals("00") ? "24" :
+                            s.substring(0, 2)) + (Integer.parseInt(s.substring(2,4)) / 60.0)) * 60.0)/7.5)));
+
+        // TODO complete output string missing values with '00'
+
+        // hexString e.g. "7B8C90949CA2..."
+
+        return hexString;
+    }
+
+//    Dark side ;-) ####################################################################################################
 
     public static String timeStringToHexStringConcat(String ...strings) {
 
@@ -185,5 +175,34 @@ public class Controller {
 
         return hexString;
     }
+
+    // TODO convert and/or refactoring of methods below to function (lambda)... for now, it's not clean :-( !!
+
+    private int iSelToggleInt() { return hhMmSsRecordSelectToggleGroup.getToggles().indexOf(hhMmSsRecordSelectToggleGroup.getSelectedToggle()); }
+
+    private String iSelTogglePlusOneStr() { return String.valueOf(iSelToggleInt() + 1); }
+
+    private void hhMmSsXStatusAndCopyLabel(String text, Boolean disable) {
+        hhMmSsXStatus.setText(text);
+        hhMmSsXStatus.setDisable(disable);
+        hhMmSsXCopyLabel.setDisable(disable);
+    }
+
+    private void updateHhMmSsXStatusAndCopyLabel() {
+        String out = hhMmSsxLabel.getText();
+
+        if (out.equals(DISABLED_HHMMSS)) hhMmSsXStatusAndCopyLabel(DISABLED_TEXT, true);
+        else if (out.equals(MIDNIGHT_HHMMSS)) hhMmSsXStatusAndCopyLabel(MIDNIGHT_TEXT, false);
+        else hhMmSsXStatusAndCopyLabel(EMPTY_STR, false);
+    }
+
+    private void updateMmSlider() {
+        if ((int) hhSlider.getValue() == 24) {
+            mmSlider.setDisable(true);
+            mmSlider.setValue(0.0);
+        } else mmSlider.setDisable(false);
+    }
+
+//    ##################################################################################################################
 
 }
