@@ -126,29 +126,6 @@ public class Controller {
                 hhMmSs2.getText()));
     }
 
-    public static String timeStringToHexStringConcatRS(String ...strings) {
-
-        // strings
-        // strings e.g. "1730", "1800", "1830", "1930", "2015", ...
-        // midnight could be "0000" either "2400", it doesn't matter!
-
-        // TODO get sequence number from a field (allowed values int:0..127)
-        String hexString = Integer.toHexString(123).toUpperCase();    // 123 = sequence number
-
-        // TODO unit res. (LSB) = 7min 30sec
-
-        for (String s: strings)
-            hexString = hexString.concat(s.equals("0") || s.contains("-") ? "00" :
-                    String.format("%02X", (int)((((double)Integer.parseInt(s.substring(0, 2).equals("00") ? "24" :
-                            s.substring(0, 2)) + (Integer.parseInt(s.substring(2,4)) / 60.0)) * 60.0)/7.5)));
-
-        // TODO complete output string missing values with '00'
-
-        // hexString e.g. "7B8C90949CA2..."
-
-        return hexString;
-    }
-
 //    Dark side ;-) ####################################################################################################
 
     public static String timeStringToHexStringConcat(String ...strings) {
